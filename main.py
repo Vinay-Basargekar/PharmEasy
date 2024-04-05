@@ -9,6 +9,7 @@ import sqlite3
 
 
 
+
 conn = sqlite3.connect("drug_data.db",check_same_thread=False)
 c = conn.cursor()
 
@@ -98,10 +99,6 @@ def order_view_all_data():
 
 
 #__________________________________________________________________________________
-
-
-
-
 
 
 
@@ -206,7 +203,7 @@ def admin():
         st.dataframe(order_clean_df.style.set_properties(**{'font-size': '16px'}))  # Larger font size
 
     elif choice == "About":
-        st.subheader("DBMS Mini Project")
+        st.subheader("MIS Mini Project")
         st.subheader("By Sabha gang")
 
 
@@ -225,58 +222,100 @@ def getauthenicate(username, password):
 
 ###################################################################
 
+import csv  
 
 def customer(username, password):
     if getauthenicate(username, password):
+        
         print("In Customer")
         st.title("Welcome to Pharmacy Store")
 
         st.subheader("Your Order Details")
         order_result = order_view_data(username)
-        # st.write(cust_result)
         with st.expander("View All Order Data"):
             order_clean_df = pd.DataFrame(order_result, columns=["Name", "Items", "Qty", "ID"])
             st.dataframe(order_clean_df)
 
-        drug_result = drug_view_all_data()
-        print(drug_result)
+        # Read drugs from CSV file
+        drug_result = []
+        with open('drugs.csv', mode='r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                drug_result.append(row)
 
-
-        st.subheader("Drug: "+drug_result[0][0])
-        img = Image.open('images/dolo650.jpg')
-        st.image(img, width=400, caption="Rs. 15/-")
-        dolo650 = st.slider(label="Quantity",min_value=0, max_value=5, key= 1)
-        st.info("When to USE: " + str(drug_result[0][2]))
-
-
-        st.subheader("Drug: " + drug_result[1][0])
-        img = Image.open('images/strepsils.JPG')
-        st.image(img, width=400 , caption="Rs. 10/-")
-        strepsils = st.slider(label="Quantity",min_value=0, max_value=5, key= 2)
-        st.info("When to USE: " + str(drug_result[1][2]))
-
-        st.subheader("Drug: " + drug_result[2][0])
-        img = Image.open('images/vicks.JPG')
-        st.image(img, width=400, caption="Rs. 65/-")
-        vicks = st.slider(label="Quantity",min_value=0, max_value=5, key=3)
-        st.info("When to USE: " + str(drug_result[2][2]))
-
-
+        for drug in drug_result:
+            st.subheader(drug['D_Name'])
+            img_path = 'images/' + drug['Image_Path']
+            img = Image.open(img_path)
+            st.image(img, width=400, caption="Rs. " + drug['D_Price'])
+            
+            quantity_slider = st.slider(label="Quantity", min_value=0, max_value=5, key=str(drug['D_id']))
+            st.info("When to USE: " + drug['D_Use'])
 
         if st.button(label="Buy now"):
             O_items = ""
-
-            if int(dolo650) > 0:
-                O_items += "Dolo-650,"
-            if int(strepsils) > 0:
-                O_items += "Strepsils,"
-            if int(vicks) > 0:
-                O_items += "Vicks"
-            O_Qty = str(dolo650)+str(',') + str(strepsils) + str(",") + str(vicks)
-
+            O_Qty = ""
+            for drug in drug_result:
+                # Access session state using string conversion for D_id
+                quantity = st.session_state[str(drug['D_id'])]
+                if int(quantity) > 0:
+                    O_items += drug['D_Name'] + ","
+                    O_Qty += str(quantity) + ","
             O_id = username + "#O" + str(random.randint(0,1000000))
-            #order_add_data(O_Name, O_Items,O_Qty, O_id):
             order_add_data(username, O_items, O_Qty, O_id)
+
+# def customer(username, password):
+#     if getauthenicate(username, password):
+        
+#         print("In Customer")
+#         st.title("Welcome to Pharmacy Store")
+
+#         st.subheader("Your Order Details")
+#         order_result = order_view_data(username)
+#         # st.write(cust_result)
+#         with st.expander("View All Order Data"):
+#             order_clean_df = pd.DataFrame(order_result, columns=["Name", "Items", "Qty", "ID"])
+#             st.dataframe(order_clean_df)
+
+#         drug_result = drug_view_all_data()
+#         print(drug_result)
+
+
+#         st.subheader("Drug: "+drug_result[0][0])
+#         img = Image.open('images/dolo650.jpg')
+#         st.image(img, width=400, caption="Rs. 15/-")
+#         dolo650 = st.slider(label="Quantity",min_value=0, max_value=5, key= 1)
+#         st.info("When to USE: " + str(drug_result[0][2]))
+
+
+#         st.subheader("Drug: " + drug_result[1][0])
+#         img = Image.open('images/strepsils.JPG')
+#         st.image(img, width=400 , caption="Rs. 10/-")
+#         strepsils = st.slider(label="Quantity",min_value=0, max_value=5, key= 2)
+#         st.info("When to USE: " + str(drug_result[1][2]))
+
+#         st.subheader("Drug: " + drug_result[2][0])
+#         img = Image.open('images/vicks.JPG')
+#         st.image(img, width=400, caption="Rs. 65/-")
+#         vicks = st.slider(label="Quantity",min_value=0, max_value=5, key=3)
+#         st.info("When to USE: " + str(drug_result[2][2]))
+
+
+
+#         if st.button(label="Buy now"):
+#             O_items = ""
+
+#             if int(dolo650) > 0:
+#                 O_items += "Dolo-650,"
+#             if int(strepsils) > 0:
+#                 O_items += "Strepsils,"
+#             if int(vicks) > 0:
+#                 O_items += "Vicks"
+#             O_Qty = str(dolo650)+str(',') + str(strepsils) + str(",") + str(vicks)
+
+#             O_id = username + "#O" + str(random.randint(0,1000000))
+#             #order_add_data(O_Name, O_Items,O_Qty, O_id):
+#             order_add_data(username, O_items, O_Qty, O_id)
 
 
 

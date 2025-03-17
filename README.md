@@ -1,49 +1,151 @@
-# Pharmacy Management System
+# 💊 PharmEasy - Pharmacy Management System
 
-Members:
-- Vinay Basargekar
-- Siddhi Uttekar
-- Shraddha Thorbole
-- Saurabh Rai
-- Yashraj Dhamale
-- Pooja Shingade
+A comprehensive digital solution for pharmacy inventory management and online medication ordering.
 
-## Technologies Used
+[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![Streamlit](https://img.shields.io/badge/streamlit-1.22.0-FF4B4B.svg)](https://streamlit.io/)
+[![SQLite](https://img.shields.io/badge/sqlite-3-blue.svg)](https://www.sqlite.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-The core technologies include:
+## 📋 Overview
 
-- **SQLite**: Used for database management, allowing for the storage and retrieval of customer, drug, and order data in a structured format.
-- **Python**: The backend logic is implemented in Python, making use of its powerful libraries for data manipulation and server-side logic.
-- **Streamlit**: For the frontend, Streamlit is used to create an interactive web application that allows users to interact with the system through a web interface.
-- **CSV Files**: Drug data is also stored and read from CSV files, providing an easy way to update and manage the drug inventory without direct database manipulation.
+PharmEasy is a modern pharmacy management system designed to streamline medication inventory, sales, and customer management. The application provides intuitive interfaces for both customers and administrators, enabling efficient pharmaceutical operations.
 
-## How It Works
-The system connects these components to provide a seamless experience:
+## 🔧 Technologies Used
 
-1. **Database Initialization**: Upon starting the application, the SQLite database is initialized with the necessary tables for customers, drugs, and orders if they do not already exist.
-2. **User Interaction**: Users interact with the system through a Streamlit web interface, where they can view drug information, place orders, and manage their account.
-3. **Data Management**: Behind the scenes, Python scripts handle the logic for database operations such as adding, updating, and deleting records based on user actions.
-4. **Dynamic Content**: The drug inventory is dynamically loaded from CSV files, allowing for easy updates to the drug list without needing to alter the database directly.
-5. **Security**: User authentication is managed through the database, ensuring that users can only access their information and order history.
+### Core Stack
+- **Python**: Powers the backend logic and data processing
+- **Streamlit**: Creates an interactive and responsive web interface
+- **SQLite**: Handles data persistence and relational database management
+- **Pillow**: Processes and displays product images
+- **pdfkit**: Generates PDF reports for order history
 
-By integrating these technologies, the Pharmacy Management System provides an efficient and user-friendly platform for managing pharmaceutical sales and inventory.
+### Architecture
+- **Model-View-Controller (MVC)** design pattern for clean separation of concerns
+- **Database-first** approach with properly normalized SQL schema
+- **Responsive UI** with intuitive user flows for both customers and administrators
 
+## ✨ Features
 
-## PROBLEM STATEMENT
-- In this era of growing demands of pharmaceutical and chemical products for health and medicine; every medical store, be it a small of medium sized businesses are running rampant towards efficient store management and rapid revenue computation. 
-- Instead of using the conventional style of paper-based records and documentation, electronic methods are preferred for stock maintenance, automatic updation of records while billing and reliable electronic documentation.
-- The software would reduce daily effort wage and labour numbers. Crushing numbers can now be left to the system.
+### 👤 Customer Portal
+- User registration and secure authentication
+- Browse available medications with detailed information
+- View product images, prices, and usage instructions
+- Interactive shopping cart with real-time total calculation
+- Order history tracking and PDF export
+- User-friendly checkout process
 
-## OBJECTIVE
-- The aim of this project is to develop a software for the effective management of the database of a pharmaceutical store.
-- It would improve the accuracy and enhance safety and efficiency in the pharmaceutical store.
-- This system will help the pharmacist to maintain the records of the medicines, handle user and admin details, check and renew the validity of the medicines and orders placed by the customer.
+### 👨‍💼 Admin Dashboard
+- Comprehensive inventory management
+  - Add, update, and delete medications
+  - Monitor expiration dates
+  - Track stock levels
+- Customer management
+  - View and manage customer accounts
+  - Update contact information
+- Order tracking and fulfillment
+  - View all orders across the system
+  - See detailed order information
 
+## 🧩 System Architecture
 
-## ER DIAGRAM
-<img src="./images/dbms-4.jpeg" width=700><br>
+The system follows a modular architecture with these key components:
 
-## OUTPUT
-<img src="./images/dbms-1.jpeg" width=700><br>
-<br><img src="./images/dbms-2.jpeg" width=700><br>
-<br><img src="./images/dbms-3.jpeg" width=700><br>
+1. **Database Layer**: SQLite database with tables for:
+   - Customers
+   - Drugs/Medications
+   - Orders
+
+2. **Backend Logic**:
+   - Authentication and authorization
+   - Database operations (CRUD)
+   - Business logic for ordering process
+   - PDF generation for reporting
+
+3. **Frontend Interface**:
+   - Streamlit-powered responsive web UI
+   - Separate views for customers and administrators
+   - Interactive components (sliders, buttons, forms)
+   - Dynamic content rendering
+
+## 🎯 Problem Statement
+
+In today's pharmaceutical industry, small and medium-sized pharmacies face challenges in:
+
+- Managing growing inventory demands efficiently
+- Maintaining accurate medication records
+- Processing sales quickly and accurately
+- Providing quality customer service
+- Reducing manual paperwork and administrative overhead
+
+PharmEasy addresses these challenges by providing a digital solution that automates record-keeping, streamlines sales processes, and improves overall operational efficiency.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.7 or higher
+- pip package manager
+- wkhtmltopdf (for PDF generation)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Vinay-Basargekar/PharmEasy.git
+cd pharmeasy
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Install wkhtmltopdf:
+   - macOS: `brew install wkhtmltopdf`
+   - Windows: [Download installer](https://wkhtmltopdf.org/downloads.html)
+   - Linux: `sudo apt-get install wkhtmltopdf`
+
+4. Ensure you have the required image files in the `/images` directory:
+   - dolo650.jpg
+   - strepsils.JPG
+   - vicks.JPG
+
+### Running the Application
+
+1. Start the Streamlit server:
+```bash
+streamlit run app.py
+```
+
+2. Open your browser and navigate to:
+```
+http://localhost:8501
+```
+
+### Default Credentials
+
+- **Admin Access**:
+  - Username: `admin`
+  - Password: `admin`
+
+## 📊 Database Schema
+
+The application uses a SQLite database with the following tables:
+
+- **Customers**: Stores user information and credentials
+- **Drugs**: Maintains medication inventory with details like name, expiry date, usage, quantity
+- **Orders**: Tracks customer purchases with order items, quantities, and unique order IDs
+
+## 📱 User Interface
+
+### Home Page
+![Home Page](./images/dbms-1.jpeg)
+
+### Product Catalog
+![Product Catalog](./images/dbms-2.jpeg)
+
+### Admin Dashboard
+![Admin Dashboard](./images/dbms-3.jpeg)
+
+### Database Schema
+![ER Diagram](./images/dbms-4.jpeg)
